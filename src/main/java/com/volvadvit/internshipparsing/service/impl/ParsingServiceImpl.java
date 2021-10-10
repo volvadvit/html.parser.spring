@@ -3,20 +3,15 @@ package com.volvadvit.internshipparsing.service.impl;
 import com.volvadvit.internshipparsing.exception.HtmlParseException;
 import com.volvadvit.internshipparsing.model.SourceURL;
 import com.volvadvit.internshipparsing.model.WordToCount;
-import com.volvadvit.internshipparsing.repository.WordRepo;
 import com.volvadvit.internshipparsing.service.ParsingService;
 import com.volvadvit.internshipparsing.service.UrlService;
+import com.volvadvit.internshipparsing.utils.LogUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author Vadim Volkov volvadvit@gmail.com
@@ -28,10 +23,8 @@ import java.util.TreeMap;
 @Slf4j
 public class ParsingServiceImpl implements ParsingService {
 
-    private final WordRepo wordRepo;
     private final UrlService urlService;
 
-    private static final int TIMEOUT_IN_MS = 5000;
     private static final String PATTERN = ("[\\[\\]\"()?:$&!.,;{}<>=#_/\t'\r|\n+-]");
 
     @Override
@@ -72,17 +65,16 @@ public class ParsingServiceImpl implements ParsingService {
         return wordsCount;
     }
 
-    private String[] parseHtml(URL url) {
+    private String[] parseHtml(String url) {
         String[] words;
         try {
-            Document doc = Jsoup.parse(url, TIMEOUT_IN_MS);
-            String resultHtml = doc.html();
+            String resultHtml = urlService.getHtmlByUrl(url);
             log.info("Get html for parsing");
 
             String parseResult = resultHtml.replaceAll(PATTERN, " ").replaceAll("\\s+", ".");
             words = parseResult.split("\\.");
-        } catch (IOException e) {
-            //TODO save log in file
+        } catch (Exception e) {
+            LogUtils.info("HTML Parse failed. " + e.getMessage());
             throw new HtmlParseException(e.getMessage());
         }
         return words;

@@ -36,9 +36,7 @@ public class MainController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<ResponseMapper> getWordsCount(@Valid SourceURL input) {
-        input = urlService.validate(input);
-
+    public ResponseEntity<ResponseMapper> getWordsCount(SourceURL input) {
         return ResponseEntity.ok().body(
                 new ResponseMapper(
                         new Timestamp(System.currentTimeMillis()),

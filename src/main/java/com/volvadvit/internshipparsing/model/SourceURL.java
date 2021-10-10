@@ -2,10 +2,8 @@ package com.volvadvit.internshipparsing.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +20,7 @@ public class SourceURL {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private URL url;
+    private String url;
     @OneToMany(mappedBy = "sourceUrl", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<WordToCount> words = new HashSet<>();
 }

@@ -3,15 +3,15 @@ package com.volvadvit.internshipparsing.service.impl;
 import com.volvadvit.internshipparsing.model.SourceURL;
 import com.volvadvit.internshipparsing.repository.SourceUrlRepo;
 import com.volvadvit.internshipparsing.service.UrlService;
+import com.volvadvit.internshipparsing.utils.LogUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import java.util.Set;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * @author Vadim Volkov volvadvit@gmail.com
@@ -32,23 +32,36 @@ public class UrlServiceImpl implements UrlService {
         if (model != null) {
             return urlRepo.save(model);
         } else {
-            //TODO save log to file
+            LogUtils.info("Failed to save entity. SourceUrl object is invalid");
             throw new IllegalArgumentException("SourceUrl object is invalid");
         }
     }
 
     @Override
-    public SourceURL validate(SourceURL model) {
-        log.info("Trying to verify url: {}", model.getUrl());
+    public String getHtmlByUrl(String input) {
+        HttpURLConnection conn = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        String result;
 
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<SourceURL>> violations = validator.validate(model);
+        try {
+            URL url = new URL(input);
+            conn = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
 
-        if (!violations.isEmpty()) {
-            //TODO save log to file
-            throw new ConstraintViolationException(violations);
-        } else {
-            return urlRepo.save(model);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            result = stringBuilder.toString();
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
+
 }
