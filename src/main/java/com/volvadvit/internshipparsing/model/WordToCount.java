@@ -1,14 +1,14 @@
 package com.volvadvit.internshipparsing.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 @Entity
@@ -25,14 +25,14 @@ public class WordToCount {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "url_id")
-    private SourceURL sourceUrl;
+    private UrlDTO sourceUrl;
 
     public WordToCount(String word, Integer count) {
         this.word = word;
         this.count = count;
     }
 
-    public WordToCount(String word, Integer count, SourceURL sourceUrl) {
+    public WordToCount(String word, Integer count, UrlDTO sourceUrl) {
         this.word = word;
         this.count = count;
         this.sourceUrl = sourceUrl;

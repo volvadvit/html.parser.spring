@@ -5,8 +5,8 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 @Data

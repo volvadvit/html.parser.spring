@@ -1,7 +1,5 @@
 package com.volvadvit.internshipparsing.utils;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -11,9 +9,10 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
+
 public class LogUtils {
 
     private static Logger logger = Logger.getLogger("error_log");

@@ -1,7 +1,7 @@
 package com.volvadvit.internshipparsing.service.impl;
 
 import com.volvadvit.internshipparsing.exception.HtmlParseException;
-import com.volvadvit.internshipparsing.model.SourceURL;
+import com.volvadvit.internshipparsing.model.UrlDTO;
 import com.volvadvit.internshipparsing.model.WordToCount;
 import com.volvadvit.internshipparsing.service.ParsingService;
 import com.volvadvit.internshipparsing.service.UrlService;
@@ -14,11 +14,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 @Service
@@ -31,15 +30,16 @@ public class ParsingServiceImpl implements ParsingService {
     private static final String PATTERN = ("[\\[\\]\"()?:$&!.,;{}<>=#_/\t'\r|\n+-]");
 
     @Override
-    public Map<String, Integer> getWordsFromHtml(SourceURL input) {
+    public Map<String, Integer> getWordsFromHtml(UrlDTO input) {
         String[] words = parseHtml(input.getUrl());
-        Map<String, Integer> wordsCount = countDuplicates(words);
-        saveWordsToDB(input, wordsCount);
+        Map<String, Integer> wordsCount = getWordsToCountMap(words);
+        saveModelsToDB(input, wordsCount);
 
         return wordsCount;
     }
 
-    private void saveWordsToDB(SourceURL input, Map<String, Integer> wordsCount) {
+    @Override
+    public void saveModelsToDB(UrlDTO input, Map<String, Integer> wordsCount) {
         log.info("Save entities to database");
 
         new Thread(() -> {
@@ -51,7 +51,8 @@ public class ParsingServiceImpl implements ParsingService {
         }).start();
     }
 
-    private Map<String, Integer> countDuplicates(String[] words) {
+    @Override
+    public Map<String, Integer> getWordsToCountMap(String[] words) {
         log.info("Counting duplicates and making map from results words");
 
         Map<String, Integer> wordsCount = new HashMap<>();
@@ -64,11 +65,12 @@ public class ParsingServiceImpl implements ParsingService {
             }
         }
 
-        log.info("Sorting Map<String, Integer> by Value");
+        log.info("Sorting Map<String, Integer> by Value and take last 10 elemets");
         wordsCount = wordsCount
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
+                .skip(wordsCount.size() * 75L / 100L)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
         return wordsCount;

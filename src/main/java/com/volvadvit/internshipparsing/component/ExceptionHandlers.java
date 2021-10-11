@@ -13,8 +13,8 @@ import java.net.MalformedURLException;
 import java.sql.Timestamp;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 @ControllerAdvice
@@ -23,7 +23,7 @@ public class ExceptionHandlers {
     @ResponseBody
     @ExceptionHandler(HtmlParseException.class)
     ResponseEntity<ResponseMapper> htmlParserError(HtmlParseException e) {
-        return ResponseEntity.internalServerError().body(
+        return ResponseEntity.badRequest().body(
                 new ResponseMapper(
                         new Timestamp(System.currentTimeMillis()),
                         HttpStatus.BAD_REQUEST.value(),

@@ -1,6 +1,6 @@
 package com.volvadvit.internshipparsing.repository;
 
-import com.volvadvit.internshipparsing.model.WordToCount;
+import com.volvadvit.internshipparsing.model.UrlDTO;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface WordRepo extends CrudRepository<WordToCount, Long> {
+public interface UrlRepo extends CrudRepository<UrlDTO, Long> {
 }

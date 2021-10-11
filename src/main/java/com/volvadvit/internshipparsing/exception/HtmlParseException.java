@@ -1,8 +1,8 @@
 package com.volvadvit.internshipparsing.exception;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 public class HtmlParseException extends RuntimeException {

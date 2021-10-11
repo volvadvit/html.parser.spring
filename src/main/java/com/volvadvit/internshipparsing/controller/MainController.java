@@ -1,7 +1,7 @@
 package com.volvadvit.internshipparsing.controller;
 
 import com.volvadvit.internshipparsing.constant.ResponseMapper;
-import com.volvadvit.internshipparsing.model.SourceURL;
+import com.volvadvit.internshipparsing.model.UrlDTO;
 import com.volvadvit.internshipparsing.service.ParsingService;
 import com.volvadvit.internshipparsing.service.UrlService;
 import lombok.AllArgsConstructor;
@@ -13,16 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
 import java.sql.Timestamp;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 @Controller
-@RequestMapping("/main")
+@RequestMapping("/")
 @AllArgsConstructor
 public class MainController {
 
@@ -36,7 +35,7 @@ public class MainController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<ResponseMapper> getWordsCount(SourceURL input) {
+    public ResponseEntity<ResponseMapper> getWordsCount(UrlDTO input) {
         return ResponseEntity.ok().body(
                 new ResponseMapper(
                         new Timestamp(System.currentTimeMillis()),

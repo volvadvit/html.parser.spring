@@ -8,15 +8,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 @Entity
 @Table(name = "url")
 @Data
 @NoArgsConstructor
-public class SourceURL {
+public class UrlDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

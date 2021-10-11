@@ -1,7 +1,7 @@
 package com.volvadvit.internshipparsing.service.impl;
 
-import com.volvadvit.internshipparsing.model.SourceURL;
-import com.volvadvit.internshipparsing.repository.SourceUrlRepo;
+import com.volvadvit.internshipparsing.model.UrlDTO;
+import com.volvadvit.internshipparsing.repository.UrlRepo;
 import com.volvadvit.internshipparsing.service.UrlService;
 import com.volvadvit.internshipparsing.utils.LogUtils;
 import lombok.AllArgsConstructor;
@@ -14,8 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * @author Vadim Volkov volvadvit@gmail.com
- * @since 10.10.2021
+ * @author Vadim Volkov
+ * volvadvit@gmail.com
  */
 
 @Service
@@ -23,10 +23,10 @@ import java.net.URL;
 @AllArgsConstructor
 public class UrlServiceImpl implements UrlService {
 
-    private final SourceUrlRepo urlRepo;
+    private final UrlRepo urlRepo;
 
     @Override
-    public SourceURL save(SourceURL model) {
+    public UrlDTO save(UrlDTO model) {
         log.info("Trying to save urlModel");
 
         if (model != null) {
@@ -54,6 +54,7 @@ public class UrlServiceImpl implements UrlService {
                 stringBuilder.append(line);
             }
             result = stringBuilder.toString();
+
             return result;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -63,5 +64,4 @@ public class UrlServiceImpl implements UrlService {
             }
         }
     }
-
 }
