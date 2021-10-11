@@ -11,7 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Vadim Volkov volvadvit@gmail.com
@@ -30,9 +33,7 @@ public class ParsingServiceImpl implements ParsingService {
     @Override
     public Map<String, Integer> getWordsFromHtml(SourceURL input) {
         String[] words = parseHtml(input.getUrl());
-
         Map<String, Integer> wordsCount = countDuplicates(words);
-
         saveWordsToDB(input, wordsCount);
 
         return wordsCount;
@@ -62,6 +63,14 @@ public class ParsingServiceImpl implements ParsingService {
                 wordsCount.put(str, 1);
             }
         }
+
+        log.info("Sorting Map<String, Integer> by Value");
+        wordsCount = wordsCount
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
         return wordsCount;
     }
 
