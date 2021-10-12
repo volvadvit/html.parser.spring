@@ -1,5 +1,6 @@
 ## Backend.Simbirsoft
 Тестовое задание для backend-практикума.
+Приложение размещено на: http://volkov.us-east-2.elasticbeanstalk.com/
 ____
 ### Tools 
 Spring (Boot, Data, Webб Test), MySQL, FlyWay, Lombok.
