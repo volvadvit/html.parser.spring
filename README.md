@@ -3,7 +3,7 @@
 Приложение размещено на: http://volkov.us-east-2.elasticbeanstalk.com/
 ____
 ### Tools 
-Spring (Boot, Data, Webб Test), MySQL, FlyWay, Lombok.
+Spring (Boot, Data, Web, Test), MySQL, FlyWay, Lombok.
 ____
 ### Description
  - Приложение представляет собой MVC сервис, делающий **парсинг полученного HTML документа, согласно заранее заданным ключам, на отдельные слова**.
