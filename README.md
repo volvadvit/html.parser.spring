@@ -1,4 +1,4 @@
-## Backend.Simbirsoft
+## HTML Parser
 Тестовое задание для backend-практикума.
 Приложение размещено на [AWS сервисе](http://volkov.us-east-2.elasticbeanstalk.com/) 
 ____
